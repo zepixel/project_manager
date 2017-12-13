@@ -1,6 +1,6 @@
 # Gestionnaire de Projets Etudiants (FR)
 
-Ce programme a pour fonction de faciliter la gestion et l'évaluation (notes/commentaires) de fichiers de rendus de projets par un groupe d'étudiant.
+Ce programme a pour fonction de faciliter la gestion et l'évaluation (notes/commentaires) de fichiers de rendus de projets par un groupe d'étudiants ou d'élèves.
 Il permet notament d'enregistrer dans des structures manipulables un ensemble de fichiers possédant une nomenclature commune et définie.
 
 Le programme gère en entrée un dossier contenant les fichiers.
