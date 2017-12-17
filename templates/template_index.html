@@ -1,0 +1,66 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<script src="sorttable.js"></script>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</HEAD>
+
+<BODY TEXT="#161616">
+
+<div id="header">
+<p>{{ titre_page }}</p>
+</div>
+
+<div id="section">
+	<table>
+		<tr>
+		{% for feuille in classeur %}
+			<td><A HREF="#{{ feuille["NOM"] }}"> {{ feuille["NOM"] }}</A></td>
+		{% endfor %}
+		</tr>
+	</table>
+
+</div> 
+
+<div id="notice">
+<p> {{ description_page }}</p>
+</div> 
+
+<div id="contenu">
+
+{% for feuille in classeur %}
+	<A NAME="{{ feuille["NOM"] }}"><H1>{{ feuille["NOM"] }}</H1></A>
+	&nbsp;
+	<COLGROUP><COL WIDTH=152><COL WIDTH=74><COL WIDTH=85><COL WIDTH=79><COL WIDTH=338></COLGROUP>
+	<TABLE  class="sortable">
+		<TBODY>
+			{% if en_tete %}
+			<TR>
+			{% for cle in feuille["ELEMENTS"][0].keys() %}
+				{% if cle %}
+					<TH> <B> {{ cle }}</B></TH>
+				{% else %}
+					<TH> <B></B></TH>
+				{% endif %}
+			{% endfor %}
+			</TR>
+			{% endif %}
+			
+			{% for element in feuille["ELEMENTS"] %}
+				<TR>
+				{% for cle in element.keys() %}
+					{% if element[cle] %}
+					<TD> <B> {{ element[cle] }}</B></TD>
+					{% else %}
+					<TD> <B></B></TD>
+					{% endif %}
+				{% endfor %}
+				</TR>
+			{% endfor %}
+	</TABLE>
+	&nbsp;
+	&nbsp;
+{% endfor %}

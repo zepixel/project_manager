@@ -1,0 +1,99 @@
+		BODY,DIV,TABLE,THEAD,TBODY,TFOOT,TR,TH,TD,P { font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif; font-size:100% }
+		
+		
+		body {
+			background-color: {{ choix_style["page_bg"] }};
+			line-height:1.3;
+			}
+			
+		h1 {
+		font-size:24px;
+		}
+
+
+			
+			
+		#header {
+			background-color:{{ choix_style["header_bg"] }};
+			color:white;
+			text-align:center;
+			padding:60px;
+			margin:0px;
+			font-size:40px;
+			}
+				
+		#section {
+			background-color:{{ choix_style["sections_bg"] }};
+			color:white;
+			padding:0px;
+			padding-left:80px;
+			margin:0px;
+			font-size:18px;
+			}
+		 
+		 #section a{
+			color:white;
+			display:block;
+			text-decoration: none;
+			}
+		 
+		 #section table{
+			text-align:center;
+			border-collapse:collapse;
+			margin:0px;
+			width: 40%;
+			}
+		 
+		 #section td {
+			border-collapse:collapse;
+			text-align:center;
+			}
+			
+		#section td:hover {
+			background-color: {{ choix_style["sections_hover"] }};
+		}
+		
+
+		 #contenu {
+			margin:80px;
+			margin-top:40px;
+			
+			}
+		 
+		 
+		 #notice {
+			padding:30px;
+			padding-left:80px;
+			background-color: {{ choix_style["notice_bg"] }} ;
+			text-align:left;
+			font-size:16px
+			}
+		 
+		 	
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			text-align:left;
+			float:center;
+		}
+
+		
+		th, td {
+			text-align: left;
+			padding: 20px;
+		}
+
+
+
+		tr:nth-child(even){background-color: {{ choix_style["notice_bg"] }} }
+
+		th {
+			background-color: {{ choix_style["tab_header"] }};
+			color: white;
+			padding:20px;
+			font-weight:bold;
+			}
+		
+		th:hover {
+			background-color: {{ choix_style["tab_header_hover"] }};
+		}
