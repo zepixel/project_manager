@@ -14,8 +14,7 @@ class xlsx_doc:
 		self.first_col = 0
 		
 		# Structures de données
-		#self.document : workbook. cf: self.load().
-
+		# self.document : workbook. cf: self.load().
 		self.element = {} 			# dico d'un élement. Cree a partir du header du doc.
 		self.liste_elements = [] 	# Ensemble des elements d'une feuille.
 		self.feuille = {"NOM":"","ELEMENTS": self.liste_elements}  
@@ -28,52 +27,37 @@ class xlsx_doc:
 
 	def load(self):
 
-		#--- Listing et selection des fichiers xlsx présents dans le dossier
+		# Listing et selection des fichiers xlsx présents dans le dossier.
 		fichiers=[fichier for fichier in os.listdir(".") if (".xlsx" in fichier or ".xls" in fichier) ]
 		
 		for index,fichier in enumerate(fichiers):
 			print ("[%s] %s" %(index,fichier))
 		
 		self.document = load_workbook(fichiers[int(input("\nEntrez le Numero de votre fichier.\n>> "))])
-		
 		print("Fichier chargé.\n")
 
-
-		#--- Première Ligne et première colonne du tableau ?
+		# Première Ligne et première colonne du tableau ?
 		self.first_row = int(input("Entrez le numero de la première ligne utile du tableau:\n>> "))
 		self.first_col = int(input("Entrez le numero de la première colonne utile du tableau:\n>> "))
 
-		#--- Y a-t-il un en-tête dans le tableau ?
+		# Y a-t-il un en-tête dans le tableau ?
 		self.header = True    # on va dire que oui.
 
-
-		'''self.header = input("\nLe tableau possède t-il un entête ?\n1. Oui\n2. Non\n>> ")
-
-		if (self.header == "1"):
-			self.header = bool(1)
-		else:
-			self.header = bool(0)
-	
-		print(self.header)
-		'''
-
+		# 2DO : self.header = bool(input("\nLe tableau possède t-il un entête ?\n1. Oui\n2. Non\n>> ") - 1)
 
 
 		# Attribution des clés du dico d'un element en fonction de l'entete du tableau s'il y en à un.
 		if self.header:
 			for sheet in self.document:
-			
 				for ligne in sheet.iter_rows(min_row = self.first_row, min_col=self.first_col, max_row = self.first_row):
-				
 					for key in ligne:
 						self.element.update({key.value:""})
 				break
-			
 		else:
-			print("pas d'entete")
+			# Attribution des clé du dico d'élément à la main par l'utilisateur.
+			pass # On verra ça plus tard.
 
-	
-	
+
 		# Attribution des valeurs aux clés du dictionnaire d'éléments en fonction des lignes du tableau
 		for sheet in self.document:
 			
@@ -86,7 +70,7 @@ class xlsx_doc:
 					self.element[key]=ligne[index_case_ligne].value
 					index_case_ligne = index_case_ligne + 1
 
-					#with open("./Web/lol.txt","a") as fichier:     //Test error UTF 8
+					#with open("./Web/lol.txt","a") as fichier:     //Test error UTF 8 MAC OS
 					#	fichier.write(str(self.element[key]))
 				
 				self.liste_elements.append(self.element.copy())
@@ -94,8 +78,7 @@ class xlsx_doc:
 				self.feuille["ELEMENTS"]= self.liste_elements.copy()
 
 			self.classeur.append(self.feuille.copy())
-			self.liste_elements = []
-			
+			self.liste_elements = []	
 
 		print ("Structure de donnée créee.")   
 		print("\n")
@@ -105,6 +88,8 @@ class xlsx_doc:
 
 	def map(self, table):
 
+		# Fonction servant à mapper les structures de données chargée sur le fichier de sortie selectionné.
+		# La fonction compare les noms des étudiants et les lignes du tableau afin de créer le mapping. Ce mapping est utilisé ensuite par la fonction fill().
 		# ToDo: Mise en place d'un système de template de mapping en fonction des formats des xlsx des écoles
 		# ex: If template_mapping =="esra" self.mapping == {esra_xlsx:esra_projectList  etc}
 
@@ -120,7 +105,7 @@ class xlsx_doc:
 
 		for key_element in self.element.keys():
 			
-			if automap == True:
+			if automap :  # Mappage manuel en attendant de mettre en place une GUI pour permettre au user de faire ça proprement.
 			
 				if key_element == "NOM":
 					self.mapping.update({"NOM":"ETUDIANTS"})
@@ -168,26 +153,24 @@ class xlsx_doc:
 				self.mapping.update({key_element:choix_map[int(input(">> "))]})
 				print (choix_map)
 
-			
 			input (self.mapping)
-
-
-		
 
 
 
 
 class web_renderer:
 
+	# Moteur de rendu de page web à partir d'un document xlsx.
+
 	def __init__(self,name,document):
 		self.name = name
-		#self.env = env
+		#self.env = env  /!\ bug 
 		self.document = document
 		self.title = input("\nQuel sera le titre de la page Web ?\n>> ") or " "
 		self.description = input("\nQuelle description souhaitez-vous afficher sur la page ?\n>> ") or " "
 
 		
-		#--- Styles de couleurs de la page
+		# Styles de couleurs de la page
 		self.colorstyle_default = {
 		"nom" : "Style par defaut",
 		"page_bg" : "#F8E6E0",
@@ -239,7 +222,7 @@ class web_renderer:
 
 	def style_select(self):
 
-		# --- Selection du style ---#
+		# Selection du style
 		print("\nChoisissez un style de couleurs: \n")
 		index = 0
 		for index,style in enumerate(self.style_list):
@@ -249,23 +232,31 @@ class web_renderer:
 
 
 	def load_templates(self):
-		# Chargement Templates
-		# INDEX.HTML
-		self.template_html_file = open("./templates/template_index.html", "r" )
-		self.template_css_file = open('./templates/template_style.css',"r")
+
+		# Chargement des fichiers Templates
+		while True:
+			try:
+				self.template_html_file = open("./templates/template_index.html", "r" )
+				self.template_css_file = open('./templates/template_style.css',"r")
+				
+				# CREATION TEMPLATES JINJA2
+				self.indexhtml = Template(self.template_html_file.read())
+				self.stylecss = Template(self.template_css_file.read())
+				
+				print("templates chargés")
+
+				self.template_html_file.close()
+				self.template_css_file.close()
+				break
+
+			except IOError:
+				input("\nFichiers templates introuvables.")
+				break
 		
-		self.indexhtml = Template(self.template_html_file.read())
-		# STYLE.CSS
-		self.stylecss = Template(self.template_css_file.read())
-		print("templates chargés")
-
-		self.template_html_file.close()
-		self.template_css_file.close()
-
 
 	def render(self):
 
-		#Création des fichiers de sortie
+		# Création des fichiers de sortie
 		self.file_index = "./Web/Index.html"
 		self.file_stylecss = "./Web/style.css"
 
