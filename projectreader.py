@@ -75,7 +75,7 @@ Une session précédente à été détectée, voulez vous reprendre cette sessio
                 self.handler_0.load_projects(self)
                 input("\nAppuyez sur une touche pour commencer l'evaluation.")
                 clear()
-                #print_project_list(self.project_list)
+                #self.print_project_list(self.project_list)
                 self.handler_0.eval_all_projects(self)
                 self.choix_session = 3
 		
@@ -311,7 +311,7 @@ class project_handler:
 
 
                 if selection_index !=0:
-                    print_project(resultats[selection_index - 1])
+                    self.print_project(resultats[selection_index - 1])
                     
                     while True:
                     
@@ -362,7 +362,7 @@ class project_handler:
                         input("\nEntrez un numéro de menu valide.")
 
                 print("")
-                print_project(resultats[selection_index])
+                self.print_project(resultats[selection_index])
                 choix_2 = int(input("\nQue souhaitez vous faire ?\n1. Réevaluer le projet ?\n2. Retour\n>> "))
         
                 if choix_2 == 1:
@@ -405,7 +405,7 @@ class project_handler:
                         input("\nEntrez un numéro de menu valide.")
 
                 print("")
-                print_project(resultats[selection_index])
+                self.print_project(resultats[selection_index])
                 choix_2 = int(input("\nQue souhaitez vous faire ?\n1. Réevaluer le projet ?\n2. Retour\n>> "))
         
                 if choix_2 == 1:
@@ -457,7 +457,7 @@ class project_handler:
 
                     try:
                         clear()
-                        print_project(resultats[selection_index])
+                        self.print_project(resultats[selection_index])
                         choix_2 = int(input("\nQue souhaitez vous faire ?\n1. Réevaluer le projet ?\n2. Retour\n>> "))
                         if choix_2 == 1:
                             self.eval_project(resultats[selection_index])
