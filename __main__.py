@@ -7,7 +7,11 @@ from projectreader import clear, session
 
 while True:
     try:
+<<<<<<< HEAD
         # hello world Master,
+=======
+        # hello world TEST,
+>>>>>>> TEST
         clear()
         print("\nCe script vous permet de charger des projets etudiants, de les noter et les commenter, puis de les retranscrire dans le fichier excel de section et de les mettre en ligne sous forme d'une page web.\n")
         session_0 = session("NOM","./session/session.json")
