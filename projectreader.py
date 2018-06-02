@@ -173,7 +173,8 @@ Une session précédente à été détectée, voulez vous reprendre cette sessio
 class project_handler:
 
     def __init__(self):
-        self.dir = "./projets"
+        self.dir=input("Entrez le chemin d'accès du dossier de projets:\n> ")
+        #self.dir = "./projets"
         self.projet = {"NOM" : "", "ETUDIANTS": [] , "SECTION" : "","FICHIER" : "", "NOTE": "Aucune note", "COMMENTAIRE" : "Aucun commentaire", "CHECKSUM": 0}
 
 
