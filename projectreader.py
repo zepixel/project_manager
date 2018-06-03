@@ -245,7 +245,7 @@ class project_handler:
     def print_txt_file(self, txt_file, liste_projets):
         with open(txt_file,"w+") as _txt_:
             for projet in liste_projets:
-                buffer = "\n" + projet["NOM"] + " réalisé par " + ", ".join(projet["ETUDIANTS"]) + ", en section " + projet["SECTION"] +":\n    NOTE: " + projet["NOTE"] + "\n    Commentaire: " + projet["COMMENTAIRE"] + "\n"
+                buffer = "\n\n" + projet["NOM"] + " réalisé par " + ", ".join(projet["ETUDIANTS"]) + ", en section " + projet["SECTION"] +":\n    NOTE: " + projet["NOTE"] + "\n    Commentaire: " + projet["COMMENTAIRE"] + "\n\n"
                 _txt_.write(buffer)
 
         input("\nFichier Evaluations.txt enregistré dans le dossier Sorties.")
