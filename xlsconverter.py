@@ -206,7 +206,7 @@ class xlsx_doc:
 					cell_content= []
 
 		out_workbook.save("./sortie/lol.xlsx")
-		input("sauvegarde ok")
+		input("sauvegarde ok !")
 
 
 
