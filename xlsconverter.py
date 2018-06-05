@@ -199,7 +199,7 @@ class xlsx_doc:
 						cell_content.append(str(self.classeur[s]["ELEMENTS"][l][key]))
 							
 					input(cell_content)
-					#input(len(cell_content))
+					#input(len(cell_content)) 
 					#input(c)
 
 					#sheet.cell(column=actual_col, row=actual_row, value=cell_content[l])
