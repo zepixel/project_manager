@@ -64,7 +64,7 @@ class xlsx_doc:
 			self.feuille["NOM"] = sheet.title
 			
 			for ligne in sheet.iter_rows(min_row = self.first_row + 1 , min_col=self.first_col):
-				index_case_ligne = 0    
+				index_case_ligne = 0
 			
 				for key in self.element.keys():
 					self.element[key]=ligne[index_case_ligne].value
@@ -93,7 +93,7 @@ class xlsx_doc:
 		# ToDo: Mise en place d'un système de template de mapping en fonction des formats des xlsx des écoles
 		# ex: If template_mapping =="esra" self.mapping == {esra_xlsx:esra_projectList  etc}
 
-		automap = True
+		automap = True # Pour l'instant mappage automatique.
 		table = table
 		print ("Les colonnes dans le fichier xlsx sont les suivantes :\n")
 		out = ""
@@ -105,7 +105,7 @@ class xlsx_doc:
 
 		for key_element in self.element.keys():
 			
-			if automap :  # Mappage manuel en attendant de mettre en place une GUI pour permettre au user de faire ça proprement.
+			if automap :  # Mappage auto en attendant de mettre en place une GUI pour permettre au user de faire ça manuellement.
 			
 				if key_element == "NOM":
 					self.mapping.update({"NOM":"ETUDIANTS"})
@@ -151,9 +151,66 @@ class xlsx_doc:
 					choix_map.append(key_table)
 
 				self.mapping.update({key_element:choix_map[int(input(">> "))]})
-				print (choix_map)
+				#print (choix_map)
 
-			input (self.mapping)
+			#input (self.mapping)
+
+
+	def fill(self, project_list):
+
+		for projet in project_list:
+
+			for etudiant in projet["ETUDIANTS"]:
+				#print(etudiant)
+
+				for feuille in self.classeur:
+					for element in feuille["ELEMENTS"]:
+						#input(element)
+						#print("\n")
+						if element["NOM"] == etudiant:
+							element["NOTE"] = projet["NOTE"]
+							element["OBSERVATION"] = projet["COMMENTAIRE"]
+
+						#input(element)
+
+		#print(self.classeur)
+
+
+	def write(self):
+		out_workbook = self.document
+
+
+		for s,sheet in enumerate(out_workbook):
+
+			#sheet.title= self.classeur[sheet]["NOM"].value
+
+			for c,col in enumerate(sheet.iter_cols(min_row = self.first_row + 1 , min_col=self.first_col)):
+
+				actual_col = self.first_col + c
+
+				for l,ligne in enumerate(sheet.iter_rows(min_row = self.first_row + 1 , min_col=self.first_col)):
+					
+					actual_row = self.first_row + 1 + l
+
+					#print("feuille: " , sheet.title, "\n")
+					#print("ligne:", ligne , "\n")
+					
+					for key in self.classeur[s]["ELEMENTS"][l].keys():
+						cell_content = str(self.classeur[s]["ELEMENTS"][l][key])
+						#input(cell_content)
+						coord = str(actual_col) + " " + str(actual_row)
+						sheet.cell(column=actual_col, row=actual_row, value=cell_content)
+
+
+		out_workbook.save("./sortie/lol.xlsx")
+		input("sauvegarde ok")
+
+
+
+
+
+
+
 
 
 

@@ -131,7 +131,8 @@ Une session précédente à été détectée, voulez vous reprendre cette sessio
                         
                         if choix_xlsx == 1:
                             self.xlsx_doc_0.map(self.project_list)
-                            # xlsx_doc_0.fill
+                            self.xlsx_doc_0.fill(self.project_list)
+                            self.xlsx_doc_0.write()
 
                         if choix_xlsx == 2:
                             self.web_0 = web_renderer("web",self.xlsx_doc_0)
