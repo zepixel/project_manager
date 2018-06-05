@@ -181,29 +181,30 @@ class xlsx_doc:
 		cell_content= []
 
 		for s,sheet in enumerate(out_workbook):
-
-			#sheet.title= self.classeur[sheet]["NOM"].value
 	
-			for c,col in enumerate(sheet.iter_cols(min_row = self.first_row + 1 , min_col=self.first_col)):
+			for l,ligne in enumerate(sheet.iter_rows(min_row = self.first_row + 1 , min_col=self.first_col)):
+				
+				actual_row = self.first_row + 1 + l
+
+				for key in self.classeur[s]["ELEMENTS"][l].keys():
+						cell_content.append(str(self.classeur[s]["ELEMENTS"][l][key]))
 					
-				actual_col = self.first_col + c
+				#input(cell_content)
 
-				for l,ligne in enumerate(sheet.iter_rows(min_row = self.first_row + 1 , min_col=self.first_col)):
+				for c,col in enumerate(sheet.iter_cols(min_row = self.first_row + 1 , min_col=self.first_col)):
 
-					actual_row = self.first_row + 1 + l
+					actual_col = self.first_col + c
 				
 					#print("feuille: " , sheet.title, "\n")
-					print("ligne:", ligne , "\n")
-						
-					for key in self.classeur[s]["ELEMENTS"][l].keys():
-						cell_content.append(str(self.classeur[s]["ELEMENTS"][l][key]))
+					#print("ligne:", ligne , "\n")
 							
-					input(cell_content)
+					#input(cell_content)
 					#input(len(cell_content)) 
-					#input(c)
-
-					#sheet.cell(column=actual_col, row=actual_row, value=cell_content[l])
-					cell_content= []
+					print(c)
+					print(cell_content[c])
+					sheet.cell(column=actual_col, row=actual_row, value=cell_content[c])
+				
+				cell_content= []
 
 		out_workbook.save("./sortie/lol.xlsx")
 		input("sauvegarde ok !")
