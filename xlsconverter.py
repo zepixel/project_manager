@@ -178,7 +178,8 @@ class xlsx_doc:
 
 	def write(self):
 		out_workbook = self.document
-
+		cell_content= []
+		cell_content_index=0
 
 		for s,sheet in enumerate(out_workbook):
 
@@ -187,7 +188,7 @@ class xlsx_doc:
 			for c,col in enumerate(sheet.iter_cols(min_row = self.first_row + 1 , min_col=self.first_col)):
 
 				actual_col = self.first_col + c
-
+				
 				for l,ligne in enumerate(sheet.iter_rows(min_row = self.first_row + 1 , min_col=self.first_col)):
 					
 					actual_row = self.first_row + 1 + l
@@ -196,11 +197,16 @@ class xlsx_doc:
 					#print("ligne:", ligne , "\n")
 					
 					for key in self.classeur[s]["ELEMENTS"][l].keys():
-						cell_content = str(self.classeur[s]["ELEMENTS"][l][key])
-						#input(cell_content)
-						coord = str(actual_col) + " " + str(actual_row)
-						sheet.cell(column=actual_col, row=actual_row, value=cell_content)
+						cell_content.append(str(self.classeur[s]["ELEMENTS"][l][key]))
+						
+					#input(cell_content)
+					#input(len(cell_content))
+					#input(c)
+					if cell_content_index > (len(cell_content) - 1):
+						cell_content_index = 0
 
+					sheet.cell(column=actual_col, row=actual_row, value=cell_content[cell_content_index])
+					cell_content= []
 
 		out_workbook.save("./sortie/lol.xlsx")
 		input("sauvegarde ok")
