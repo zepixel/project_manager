@@ -168,9 +168,10 @@ class xlsx_doc:
 						#input(element)
 						#print("\n")
 						if element["NOM"] == etudiant:
+
 							element["NOTE"] = projet["NOTE"]
 							element["OBSERVATION"] = projet["COMMENTAIRE"]
-
+						
 						#input(element)
 
 		#print(self.classeur)
@@ -202,8 +203,11 @@ class xlsx_doc:
 					#input(len(cell_content)) 
 					print(c)
 					print(cell_content[c])
-					sheet.cell(column=actual_col, row=actual_row, value=cell_content[c])
-				
+					if cell_content[c] != "None":
+						sheet.cell(column=actual_col, row=actual_row, value=cell_content[c])
+					else:
+						sheet.cell(column=actual_col, row=actual_row, value="NON RENDU")
+
 				cell_content= []
 
 		out_workbook.save("./sortie/lol.xlsx")
